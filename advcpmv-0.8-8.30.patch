@@ -1,4 +1,27 @@
+Nur in coreutils-8.30-patched/src/: [.
+Nur in coreutils-8.30-patched/src/: b2sum.
+Nur in coreutils-8.30-patched/src/: base32.
+Nur in coreutils-8.30-patched/src/: base64.
+Nur in coreutils-8.30-patched/src/: basename.
+Nur in coreutils-8.30-patched/src/: basename.o.
 Gemeinsame Unterverzeichnisse: coreutils-8.30/src/blake2 und coreutils-8.30-patched/src/blake2.
+Nur in coreutils-8.30-patched/src/: cat.
+Nur in coreutils-8.30-patched/src/: cat.o.
+Nur in coreutils-8.30-patched/src/: chcon.
+Nur in coreutils-8.30-patched/src/: chcon.o.
+Nur in coreutils-8.30-patched/src/: chgrp.
+Nur in coreutils-8.30-patched/src/: chgrp.o.
+Nur in coreutils-8.30-patched/src/: chmod.
+Nur in coreutils-8.30-patched/src/: chmod.o.
+Nur in coreutils-8.30-patched/src/: chown.
+Nur in coreutils-8.30-patched/src/: chown-core.o.
+Nur in coreutils-8.30-patched/src/: chown.o.
+Nur in coreutils-8.30-patched/src/: chroot.
+Nur in coreutils-8.30-patched/src/: chroot.o.
+Nur in coreutils-8.30-patched/src/: cksum.
+Nur in coreutils-8.30-patched/src/: cksum.o.
+Nur in coreutils-8.30-patched/src/: comm.
+Nur in coreutils-8.30-patched/src/: comm.o.
 diff -u coreutils-8.30/src/copy.c coreutils-8.30-patched/src/copy.c
 --- coreutils-8.30/src/copy.c	2018-07-01 04:32:02.000000000 +0200
 +++ coreutils-8.30-patched/src/copy.c	2018-09-19 19:22:06.707108210 +0200
@@ -353,9 +376,12 @@ diff -u coreutils-8.30/src/copy.h coreutils-8.30-patched/src/copy.h
 +/* END OF PROGRESS MOD */ 
 +
  #endif
+Nur in coreutils-8.30-patched/src/: copy.o.
+Nur in coreutils-8.30-patched/src/: coreutils.h.
+Nur in coreutils-8.30-patched/src/: cp.
 diff -u coreutils-8.30/src/cp.c coreutils-8.30-patched/src/cp.c
 --- coreutils-8.30/src/cp.c	2018-06-24 04:12:51.000000000 +0200
-+++ coreutils-8.30-patched/src/cp.c	2018-09-19 19:25:55.195996568 +0200
++++ coreutils-8.30-patched/src/cp.c	2018-09-19 20:42:07.159168551 +0200
 @@ -131,6 +131,7 @@
    {"symbolic-link", no_argument, NULL, 's'},
    {"target-directory", required_argument, NULL, 't'},
@@ -447,46 +473,46 @@ diff -u coreutils-8.30/src/cp.c coreutils-8.30-patched/src/cp.c
        ok = copy (source, new_dest, 0, x, &unused, NULL);
      }
  
-++    if (progress) {
-++        /* BEGIN progress mod */
-++        /* remove everything */
-++        int i;
-++        if ( g_iTotalFiles > 1 )
-++        {
-++          for ( i = 0; i < 6; i++ )
-++            printf ( "\033[K\n" );
-++          printf ( "\r\033[6A" );
-++        }
-++        else
-++        {
-++          for ( i = 0; i < 3; i++ )
-++            printf ( "\033[K\n" );
-++          printf ( "\r\033[3A" );
-++        }
-++
-++        /* save time */
-++        struct timeval end_time;
-++        gettimeofday ( & end_time, NULL );
-++        int usec_elapsed = end_time.tv_usec - start_time.tv_usec;
-++        double sec_elapsed = ( double ) usec_elapsed / 1000000.f;
-++        sec_elapsed += ( double ) ( end_time.tv_sec - start_time.tv_sec );
-++
-++        /* get total size */
-++        char sTotalWritten[20];
-++        file_size_format ( sTotalWritten, g_iTotalSize, 1 );
-++        /* TODO: using g_iTotalWritten would be more correct, but is less accurate */
-++
-++        /* calculate speed */
-++        int copy_speed = ( int ) ( ( double ) g_iTotalWritten / sec_elapsed );
-++        char s_copy_speed[20];
-++        file_size_format ( s_copy_speed, copy_speed, 1 );
-++
-++        /* good-bye message */
-++        printf ( "%d files (%s) copied in %.1f seconds (%s/s).\n", g_iFilesCopied, sTotalWritten,
-++                 sec_elapsed, s_copy_speed );
-++        /* END progress mod */
-++    }
-++
++    if (progress) {
++        /* BEGIN progress mod */
++        /* remove everything */
++        int i;
++        if ( g_iTotalFiles > 1 )
++        {
++          for ( i = 0; i < 6; i++ )
++            printf ( "\033[K\n" );
++          printf ( "\r\033[6A" );
++        }
++        else
++        {
++          for ( i = 0; i < 3; i++ )
++            printf ( "\033[K\n" );
++          printf ( "\r\033[3A" );
++        }
++
++        /* save time */
++        struct timeval end_time;
++        gettimeofday ( & end_time, NULL );
++        int usec_elapsed = end_time.tv_usec - start_time.tv_usec;
++        double sec_elapsed = ( double ) usec_elapsed / 1000000.f;
++        sec_elapsed += ( double ) ( end_time.tv_sec - start_time.tv_sec );
++
++        /* get total size */
++        char sTotalWritten[20];
++        file_size_format ( sTotalWritten, g_iTotalSize, 1 );
++        /* TODO: using g_iTotalWritten would be more correct, but is less accurate */
++
++        /* calculate speed */
++        int copy_speed = ( int ) ( ( double ) g_iTotalWritten / sec_elapsed );
++        char s_copy_speed[20];
++        file_size_format ( s_copy_speed, copy_speed, 1 );
++
++        /* good-bye message */
++        printf ( "%d files (%s) copied in %.1f seconds (%s/s).\n", g_iFilesCopied, sTotalWritten,
++                 sec_elapsed, s_copy_speed );
++        /* END progress mod */
++    }
++
    return ok;
  }
  
@@ -518,6 +544,89 @@ diff -u coreutils-8.30/src/cp.c coreutils-8.30-patched/src/cp.c
          case 'H':
            x.dereference = DEREF_COMMAND_LINE_ARGUMENTS;
            break;
+Nur in coreutils-8.30-patched/src/: cp-hash.o.
+Nur in coreutils-8.30-patched/src/: cp.o.
+Nur in coreutils-8.30-patched/src/: csplit.
+Nur in coreutils-8.30-patched/src/: csplit.o.
+Nur in coreutils-8.30-patched/src/: cut.
+Nur in coreutils-8.30-patched/src/: cut.o.
+Nur in coreutils-8.30-patched/src/: date.
+Nur in coreutils-8.30-patched/src/: date.o.
+Nur in coreutils-8.30-patched/src/: dd.
+Nur in coreutils-8.30-patched/src/: dd.o.
+Nur in coreutils-8.30-patched/src/: .deps.
+Nur in coreutils-8.30-patched/src/: df.
+Nur in coreutils-8.30-patched/src/: df.o.
+Nur in coreutils-8.30-patched/src/: dir.
+Nur in coreutils-8.30-patched/src/: dircolors.
+Nur in coreutils-8.30-patched/src/: dircolors.o.
+Nur in coreutils-8.30-patched/src/: dirname.
+Nur in coreutils-8.30-patched/src/: dirname.o.
+Nur in coreutils-8.30-patched/src/: .dirstamp.
+Nur in coreutils-8.30-patched/src/: du.
+Nur in coreutils-8.30-patched/src/: du.o.
+Nur in coreutils-8.30-patched/src/: echo.
+Nur in coreutils-8.30-patched/src/: echo.o.
+Nur in coreutils-8.30-patched/src/: env.
+Nur in coreutils-8.30-patched/src/: env.o.
+Nur in coreutils-8.30-patched/src/: expand.
+Nur in coreutils-8.30-patched/src/: expand-common.o.
+Nur in coreutils-8.30-patched/src/: expand.o.
+Nur in coreutils-8.30-patched/src/: expr.
+Nur in coreutils-8.30-patched/src/: expr.o.
+Nur in coreutils-8.30-patched/src/: extent-scan.o.
+Nur in coreutils-8.30-patched/src/: factor.
+Nur in coreutils-8.30-patched/src/: factor.o.
+Nur in coreutils-8.30-patched/src/: false.
+Nur in coreutils-8.30-patched/src/: false.o.
+Nur in coreutils-8.30-patched/src/: find-mount-point.o.
+Nur in coreutils-8.30-patched/src/: fmt.
+Nur in coreutils-8.30-patched/src/: fmt.o.
+Nur in coreutils-8.30-patched/src/: fold.
+Nur in coreutils-8.30-patched/src/: fold.o.
+Nur in coreutils-8.30-patched/src/: force-link.o.
+Nur in coreutils-8.30-patched/src/: getlimits.
+Nur in coreutils-8.30-patched/src/: getlimits.o.
+Nur in coreutils-8.30-patched/src/: ginstall.
+Nur in coreutils-8.30-patched/src/: group-list.o.
+Nur in coreutils-8.30-patched/src/: groups.
+Nur in coreutils-8.30-patched/src/: groups.o.
+Nur in coreutils-8.30-patched/src/: head.
+Nur in coreutils-8.30-patched/src/: head.o.
+Nur in coreutils-8.30-patched/src/: hostid.
+Nur in coreutils-8.30-patched/src/: hostid.o.
+Nur in coreutils-8.30-patched/src/: id.
+Nur in coreutils-8.30-patched/src/: id.o.
+Nur in coreutils-8.30-patched/src/: join.
+Nur in coreutils-8.30-patched/src/: join.o.
+Nur in coreutils-8.30-patched/src/: kill.
+Nur in coreutils-8.30-patched/src/: kill.o.
+Nur in coreutils-8.30-patched/src/: lbracket.o.
+Nur in coreutils-8.30-patched/src/: libstdbuf.so.
+Nur in coreutils-8.30-patched/src/: libver.a.
+Nur in coreutils-8.30-patched/src/: link.
+Nur in coreutils-8.30-patched/src/: link.o.
+Nur in coreutils-8.30-patched/src/: ln.
+Nur in coreutils-8.30-patched/src/: ln.o.
+Nur in coreutils-8.30-patched/src/: logname.
+Nur in coreutils-8.30-patched/src/: logname.o.
+Nur in coreutils-8.30-patched/src/: ls.
+Nur in coreutils-8.30-patched/src/: ls-dir.o.
+Nur in coreutils-8.30-patched/src/: ls-ls.o.
+Nur in coreutils-8.30-patched/src/: ls.o.
+Nur in coreutils-8.30-patched/src/: ls-vdir.o.
+Nur in coreutils-8.30-patched/src/: make-prime-list.
+Nur in coreutils-8.30-patched/src/: make-prime-list.o.
+Nur in coreutils-8.30-patched/src/: md5sum.
+Nur in coreutils-8.30-patched/src/: mkdir.
+Nur in coreutils-8.30-patched/src/: mkdir.o.
+Nur in coreutils-8.30-patched/src/: mkfifo.
+Nur in coreutils-8.30-patched/src/: mkfifo.o.
+Nur in coreutils-8.30-patched/src/: mknod.
+Nur in coreutils-8.30-patched/src/: mknod.o.
+Nur in coreutils-8.30-patched/src/: mktemp.
+Nur in coreutils-8.30-patched/src/: mktemp.o.
+Nur in coreutils-8.30-patched/src/: mv.
 diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 --- coreutils-8.30/src/mv.c	2018-06-24 04:12:51.000000000 +0200
 +++ coreutils-8.30-patched/src/mv.c	2018-09-19 20:32:46.616978848 +0200
@@ -653,3 +762,139 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
          case 'S':
            make_backups = true;
            backup_suffix = optarg;
+Nur in coreutils-8.30-patched/src/: mv.o.
+Nur in coreutils-8.30-patched/src/: nice.
+Nur in coreutils-8.30-patched/src/: nice.o.
+Nur in coreutils-8.30-patched/src/: nl.
+Nur in coreutils-8.30-patched/src/: nl.o.
+Nur in coreutils-8.30-patched/src/: nohup.
+Nur in coreutils-8.30-patched/src/: nohup.o.
+Nur in coreutils-8.30-patched/src/: nproc.
+Nur in coreutils-8.30-patched/src/: nproc.o.
+Nur in coreutils-8.30-patched/src/: numfmt.
+Nur in coreutils-8.30-patched/src/: numfmt.o.
+Nur in coreutils-8.30-patched/src/: od.
+Nur in coreutils-8.30-patched/src/: od.o.
+Nur in coreutils-8.30-patched/src/: operand2sig.o.
+Nur in coreutils-8.30-patched/src/: paste.
+Nur in coreutils-8.30-patched/src/: paste.o.
+Nur in coreutils-8.30-patched/src/: pathchk.
+Nur in coreutils-8.30-patched/src/: pathchk.o.
+Nur in coreutils-8.30-patched/src/: pinky.
+Nur in coreutils-8.30-patched/src/: pinky.o.
+Nur in coreutils-8.30-patched/src/: pr.
+Nur in coreutils-8.30-patched/src/: printenv.
+Nur in coreutils-8.30-patched/src/: printenv.o.
+Nur in coreutils-8.30-patched/src/: printf.
+Nur in coreutils-8.30-patched/src/: printf.o.
+Nur in coreutils-8.30-patched/src/: pr.o.
+Nur in coreutils-8.30-patched/src/: prog-fprintf.o.
+Nur in coreutils-8.30-patched/src/: ptx.
+Nur in coreutils-8.30-patched/src/: ptx.o.
+Nur in coreutils-8.30-patched/src/: pwd.
+Nur in coreutils-8.30-patched/src/: pwd.o.
+Nur in coreutils-8.30-patched/src/: readlink.
+Nur in coreutils-8.30-patched/src/: readlink.o.
+Nur in coreutils-8.30-patched/src/: realpath.
+Nur in coreutils-8.30-patched/src/: realpath.o.
+Nur in coreutils-8.30-patched/src/: relpath.o.
+Nur in coreutils-8.30-patched/src/: remove.o.
+Nur in coreutils-8.30-patched/src/: rm.
+Nur in coreutils-8.30-patched/src/: rmdir.
+Nur in coreutils-8.30-patched/src/: rmdir.o.
+Nur in coreutils-8.30-patched/src/: rm.o.
+Nur in coreutils-8.30-patched/src/: runcon.
+Nur in coreutils-8.30-patched/src/: runcon.o.
+Nur in coreutils-8.30-patched/src/: selinux.o.
+Nur in coreutils-8.30-patched/src/: seq.
+Nur in coreutils-8.30-patched/src/: seq.o.
+Nur in coreutils-8.30-patched/src/: set-fields.o.
+Nur in coreutils-8.30-patched/src/: sha1sum.
+Nur in coreutils-8.30-patched/src/: sha224sum.
+Nur in coreutils-8.30-patched/src/: sha256sum.
+Nur in coreutils-8.30-patched/src/: sha384sum.
+Nur in coreutils-8.30-patched/src/: sha512sum.
+Nur in coreutils-8.30-patched/src/: shred.
+Nur in coreutils-8.30-patched/src/: shred.o.
+Nur in coreutils-8.30-patched/src/: shuf.
+Nur in coreutils-8.30-patched/src/: shuf.o.
+Nur in coreutils-8.30-patched/src/: sleep.
+Nur in coreutils-8.30-patched/src/: sleep.o.
+Nur in coreutils-8.30-patched/src/: sort.
+Nur in coreutils-8.30-patched/src/: sort.o.
+Nur in coreutils-8.30-patched/src/: split.
+Nur in coreutils-8.30-patched/src/: split.o.
+Nur in coreutils-8.30-patched/src/: src_b2sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: src_base32-base64.o.
+Nur in coreutils-8.30-patched/src/: src_base64-base64.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-copy.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-cp-hash.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-extent-scan.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-force-link.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-install.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-prog-fprintf.o.
+Nur in coreutils-8.30-patched/src/: src_ginstall-selinux.o.
+Nur in coreutils-8.30-patched/src/: src_libstdbuf_so-libstdbuf.o.
+Nur in coreutils-8.30-patched/src/: src_md5sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: src_sha1sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: src_sha224sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: src_sha256sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: src_sha384sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: src_sha512sum-md5sum.o.
+Nur in coreutils-8.30-patched/src/: stat.
+Nur in coreutils-8.30-patched/src/: stat.o.
+Nur in coreutils-8.30-patched/src/: stdbuf.
+Nur in coreutils-8.30-patched/src/: stdbuf.o.
+Nur in coreutils-8.30-patched/src/: stty.
+Nur in coreutils-8.30-patched/src/: stty.o.
+Nur in coreutils-8.30-patched/src/: sum.
+Nur in coreutils-8.30-patched/src/: sum.o.
+Nur in coreutils-8.30-patched/src/: sync.
+Nur in coreutils-8.30-patched/src/: sync.o.
+Nur in coreutils-8.30-patched/src/: tac.
+Nur in coreutils-8.30-patched/src/: tac.o.
+Nur in coreutils-8.30-patched/src/: tail.
+Nur in coreutils-8.30-patched/src/: tail.o.
+Nur in coreutils-8.30-patched/src/: tee.
+Nur in coreutils-8.30-patched/src/: tee.o.
+Nur in coreutils-8.30-patched/src/: test.
+Nur in coreutils-8.30-patched/src/: test.o.
+Nur in coreutils-8.30-patched/src/: timeout.
+Nur in coreutils-8.30-patched/src/: timeout.o.
+Nur in coreutils-8.30-patched/src/: touch.
+Nur in coreutils-8.30-patched/src/: touch.o.
+Nur in coreutils-8.30-patched/src/: tr.
+Nur in coreutils-8.30-patched/src/: tr.o.
+Nur in coreutils-8.30-patched/src/: true.
+Nur in coreutils-8.30-patched/src/: true.o.
+Nur in coreutils-8.30-patched/src/: truncate.
+Nur in coreutils-8.30-patched/src/: truncate.o.
+Nur in coreutils-8.30-patched/src/: tsort.
+Nur in coreutils-8.30-patched/src/: tsort.o.
+Nur in coreutils-8.30-patched/src/: tty.
+Nur in coreutils-8.30-patched/src/: tty.o.
+Nur in coreutils-8.30-patched/src/: uname.
+Nur in coreutils-8.30-patched/src/: uname.o.
+Nur in coreutils-8.30-patched/src/: uname-uname.o.
+Nur in coreutils-8.30-patched/src/: unexpand.
+Nur in coreutils-8.30-patched/src/: unexpand.o.
+Nur in coreutils-8.30-patched/src/: uniq.
+Nur in coreutils-8.30-patched/src/: uniq.o.
+Nur in coreutils-8.30-patched/src/: unlink.
+Nur in coreutils-8.30-patched/src/: unlink.o.
+Nur in coreutils-8.30-patched/src/: uptime.
+Nur in coreutils-8.30-patched/src/: uptime.o.
+Nur in coreutils-8.30-patched/src/: users.
+Nur in coreutils-8.30-patched/src/: users.o.
+Nur in coreutils-8.30-patched/src/: vdir.
+Nur in coreutils-8.30-patched/src/: version.c.
+Nur in coreutils-8.30-patched/src/: version.h.
+Nur in coreutils-8.30-patched/src/: version.o.
+Nur in coreutils-8.30-patched/src/: wc.
+Nur in coreutils-8.30-patched/src/: wc.o.
+Nur in coreutils-8.30-patched/src/: who.
+Nur in coreutils-8.30-patched/src/: whoami.
+Nur in coreutils-8.30-patched/src/: whoami.o.
+Nur in coreutils-8.30-patched/src/: who.o.
+Nur in coreutils-8.30-patched/src/: yes.
+Nur in coreutils-8.30-patched/src/: yes.o.
