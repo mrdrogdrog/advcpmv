@@ -39,8 +39,8 @@ sudo mv ./src/mv /usr/local/bin/mvg
 
 You can install the binaries and create aliases for bash (or whatever you use)
 ```
-sudo mv ./src/cp /usr/local/bin/cpg
-sudo mv ./src/mv /usr/local/bin/mvg
+sudo mv ./src/cp /usr/local/bin/advcp
+sudo mv ./src/mv /usr/local/bin/advmv
 echo alias cp '/usr/local/bin/advcp -g' >> ~/.bashrc
 echo alias mv '/usr/local/bin/advmv -g' >> ~/.bashrc
 ```
