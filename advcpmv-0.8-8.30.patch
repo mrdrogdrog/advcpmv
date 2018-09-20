@@ -378,7 +378,6 @@ diff -u coreutils-8.30/src/copy.h coreutils-8.30-patched/src/copy.h
  #endif
 Nur in coreutils-8.30-patched/src/: copy.o.
 Nur in coreutils-8.30-patched/src/: coreutils.h.
-Nur in coreutils-8.30-patched/src/: cp.
 diff -u coreutils-8.30/src/cp.c coreutils-8.30-patched/src/cp.c
 --- coreutils-8.30/src/cp.c	2018-06-24 04:12:51.000000000 +0200
 +++ coreutils-8.30-patched/src/cp.c	2018-09-19 20:42:07.159168551 +0200
@@ -626,7 +625,6 @@ Nur in coreutils-8.30-patched/src/: mknod.
 Nur in coreutils-8.30-patched/src/: mknod.o.
 Nur in coreutils-8.30-patched/src/: mktemp.
 Nur in coreutils-8.30-patched/src/: mktemp.o.
-Nur in coreutils-8.30-patched/src/: mv.
 diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 --- coreutils-8.30/src/mv.c	2018-06-24 04:12:51.000000000 +0200
 +++ coreutils-8.30-patched/src/mv.c	2018-09-20 10:36:33.316124125 +0200
