@@ -24,7 +24,7 @@ Nur in coreutils-8.30-patched/src/: comm.
 Nur in coreutils-8.30-patched/src/: comm.o.
 diff -u coreutils-8.30/src/copy.c coreutils-8.30-patched/src/copy.c
 --- coreutils-8.30/src/copy.c	2018-07-01 04:32:02.000000000 +0200
-+++ coreutils-8.30-patched/src/copy.c	2018-09-19 19:22:06.707108210 +0200
++++ coreutils-8.30-patched/src/copy.c	2018-09-20 10:32:15.473398296 +0200
 @@ -129,6 +129,72 @@
    dev_t dev;
  };
@@ -629,7 +629,7 @@ Nur in coreutils-8.30-patched/src/: mktemp.o.
 Nur in coreutils-8.30-patched/src/: mv.
 diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 --- coreutils-8.30/src/mv.c	2018-06-24 04:12:51.000000000 +0200
-+++ coreutils-8.30-patched/src/mv.c	2018-09-19 20:32:46.616978848 +0200
++++ coreutils-8.30-patched/src/mv.c	2018-09-20 10:36:33.316124125 +0200
 @@ -66,6 +66,7 @@
    {"target-directory", required_argument, NULL, 't'},
    {"update", no_argument, NULL, 'u'},
@@ -638,13 +638,15 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
    {GETOPT_HELP_OPTION_DECL},
    {GETOPT_VERSION_OPTION_DECL},
    {NULL, 0, NULL, 0}
-@@ -168,9 +169,94 @@
+@@ -168,10 +169,86 @@
  static bool
  do_move (const char *source, const char *dest, const struct cp_options *x)
  {
 +  struct timeval start_time;
 +
-+  if(progress) {
+   bool copy_into_self;
+   bool rename_succeeded;
++  if(progress && x->rename_errno != 0) {
 +    /* BEGIN progress mod */
 +    g_iTotalSize = 0;
 +    g_iFilesCopied = 0;
@@ -659,7 +661,7 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 +    /* call du -s for each file */
 +    /* create command */
 +    char command[1024];
-+    sprintf ( command, "du -s \"%s\"", source );
++    sprintf ( command, "du -s '%s'", source );
 +    /* TODO: replace all quote signs in file[i] */
 +
 +    FILE *fp;
@@ -668,7 +670,7 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 +    /* run command */
 +    fp = popen(command, "r");
 +    if (fp == NULL || fgets(output, sizeof(output)-1, fp) == NULL) {
-+      printf("failed to run du.\n" );
++      //printf("failed to run du.\n" );
 +    }
 +    else
 +    {
@@ -686,27 +688,16 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 +
 +  }
 +
-+
-+
-   bool copy_into_self;
-   bool rename_succeeded;
    bool ok = copy (source, dest, false, x, &copy_into_self, &rename_succeeded);
-+  if (progress) {
+ 
++  if (progress && (x->rename_errno != 0 && ok)) {
 +    /* BEGIN progress mod */
 +    /* remove everything */
 +    int i;
-+    if ( g_iTotalFiles > 1 )
-+    {
-+      for ( i = 0; i < 6; i++ )
-+        printf ( "\033[K\n" );
-+      printf ( "\r\033[6A" );
-+    }
-+    else
-+    {
-+      for ( i = 0; i < 3; i++ )
-+        printf ( "\033[K\n" );
-+      printf ( "\r\033[3A" );
-+    }
++    int limit = (g_iTotalFiles > 1 ? 6 : 3);
++    for ( i = 0; i < limit; i++ )
++      printf ( "\033[K\n" );
++    printf ( "\r\033[3A" );
 +
 +    /* save time */
 +    struct timeval end_time;
@@ -730,10 +721,11 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
 +             sec_elapsed, s_copy_speed );
 +    /* END progress mod */
 +  }
- 
++
    if (ok)
      {
-@@ -306,6 +392,7 @@
+       char const *dir_to_remove;
+@@ -306,6 +383,7 @@
  \n\
    -b                           like --backup but does not accept an argument\n\
    -f, --force                  do not prompt before overwriting\n\
@@ -741,7 +733,7 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
    -i, --interactive            prompt before overwrite\n\
    -n, --no-clobber             do not overwrite an existing file\n\
  If you specify more than one of -i, -f, -n, only the final one takes effect.\n\
-@@ -361,7 +448,7 @@
+@@ -361,7 +439,7 @@
    /* Try to disable the ability to unlink a directory.  */
    priv_set_remove_linkdir ();
  
@@ -750,7 +742,7 @@ diff -u coreutils-8.30/src/mv.c coreutils-8.30-patched/src/mv.c
           != -1)
      {
        switch (c)
-@@ -407,6 +494,11 @@
+@@ -407,6 +485,11 @@
          case 'v':
            x.verbose = true;
            break;
