@@ -23,6 +23,24 @@ wget https://raw.githubusercontent.com/mrdrogdrog/advcpmv/master/advcpmv-0.5-8.3
 patch -p1 -i advcpmv-0.5-8.30.patch
 ./configure
 make
+```
+
+## Usage
+
+### Change your behaviour
+
+You can install the binaries and use `cpg -g` and `mvg -g` instead of cp and mv
+```
 sudo mv ./src/cp /usr/local/bin/cpg
 sudo mv ./src/mv /usr/local/bin/mvg
+```
+
+### Alias
+
+You can install the binaries and create aliases for bash (or whatever you use)
+```
+sudo mv ./src/cp /usr/local/bin/cpg
+sudo mv ./src/mv /usr/local/bin/mvg
+echo alias cp '/usr/local/bin/advcp -g' >> ~/.bashrc
+echo alias mv '/usr/local/bin/advmv -g' >> ~/.bashrc
 ```
