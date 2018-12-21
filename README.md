@@ -44,3 +44,8 @@ sudo mv ./src/mv /usr/local/bin/advmv
 echo alias cp '/usr/local/bin/advcp -g' >> ~/.bashrc
 echo alias mv '/usr/local/bin/advmv -g' >> ~/.bashrc
 ```
+
+## Upstream merge
+
+I sent the patch to the team, that maintains the GNU CoreUtils.
+They won't merge this patch, because mv and cp are feature complete.
